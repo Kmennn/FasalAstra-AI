@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FasalAstra — Hardware Procurement List</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --ink: #1a1a1a;
+            --ink-soft: #4a4a4a;
+            --ink-muted: #7a7a7a;
+            --surface: #ffffff;
+            --wash: #f6f5f2;
+            --line: #e2e0db;
+            --line-light: #f0eeea;
+            --accent: #2c5f2d;
+            --accent-light: #eaf2ea;
+            --warn: #b45309;
+            --warn-bg: #fef9f0;
+            --danger: #991b1b;
+            --danger-bg: #fef2f2;
+            --sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+            --serif: 'DM Serif Display', Georgia, serif;
+        }
+
+        @page {
+            size: A4;
+            margin: 15mm 18mm;
+        }
+
+        body {
+            font-family: var(--sans);
+            font-size: 14px;
+            line-height: 1.55;
+            color: var(--ink);
+            background: var(--wash);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .page-shell {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .doc {
+            background: var(--surface);
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.04);
+        }
+
+        /* ── HEADER ── */
+        .doc-header {
+            padding: 48px 52px 40px;
+            border-bottom: 1px solid var(--line);
+            position: relative;
+        }
+
+        .doc-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 52px;
+            width: 64px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .doc-header .tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 4px 12px;
+            border-radius: 3px;
+            margin-bottom: 16px;
+        }
+
+        .doc-header h1 {
+            font-family: var(--serif);
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--ink);
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .doc-header .subtitle {
+            font-size: 14px;
+            color: var(--ink-muted);
+            font-weight: 400;
+        }
+
+        .meta-row {
+            display: flex;
+            gap: 32px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--line-light);
+        }
+
+        .meta-item {
+            font-size: 12px;
+        }
+
+        .meta-item .label {
+            color: var(--ink-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 10px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .meta-item .value {
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        /* ── BODY ── */
+        .doc-body { padding: 0 52px 52px; }
+
+        /* ── SECTIONS ── */
+        .section {
+            padding-top: 36px;
+        }
+
+        .section + .section {
+            border-top: 1px solid var(--line-light);
+        }
+
+        .section-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 4px;
+        }
+
+        .section-title {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--ink);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .section-note {
+            font-size: 13px;
+            color: var(--ink-soft);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* ── TABLES ── */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+
+        thead th {
+            text-align: left;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--ink);
+            white-space: nowrap;
+        }
+
+        tbody td {
+            padding: 11px 12px;
+            border-bottom: 1px solid var(--line-light);
+            vertical-align: top;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: 1px solid var(--line);
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .item-spec {
+            color: var(--ink-muted);
+            font-size: 12px;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .qty {
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .price {
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .check-col {
+            width: 28px;
+            text-align: center;
+        }
+
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid var(--line);
+            border-radius: 3px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* ── CALLOUTS ── */
+        .callout {
+            padding: 14px 18px;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 16px 0 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .callout-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 1px;
+        }
+
+        .callout.warn {
+            background: var(--warn-bg);
+            border-left: 3px solid var(--warn);
+            color: #78350f;
+        }
+
+        .callout.warn .callout-icon {
+            background: var(--warn);
+            color: white;
+        }
+
+        .callout.danger {
+            background: var(--danger-bg);
+            border-left: 3px solid var(--danger);
+            color: #7f1d1d;
+        }
+
+        .callout.danger .callout-icon {
+            background: var(--danger);
+            color: white;
+        }
+
+        .callout.info {
+            background: var(--accent-light);
+            border-left: 3px solid var(--accent);
+            color: #1a3c1a;
+        }
+
+        .callout.info .callout-icon {
+            background: var(--accent);
+            color: white;
+        }
+
+        .callout-body b { font-weight: 600; }
+
+        /* ── SUMMARY ── */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .summary-card {
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            padding: 20px;
+        }
+
+        .summary-card .card-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 6px;
+        }
+
+        .summary-card .card-value {
+            font-family: var(--serif);
+            font-size: 28px;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .summary-card .card-sub {
+            font-size: 12px;
+            color: var(--ink-muted);
+            margin-top: 6px;
+        }
+
+        /* ── MISTAKES ── */
+        .mistake-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mistake-list li {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line-light);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .mistake-list li:last-child {
+            border-bottom: none;
+        }
+
+        .do-icon, .dont-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 1px;
+        }
+
+        .dont-icon {
+            background: #fecaca;
+            color: var(--danger);
+        }
+
+        .do-icon {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        /* ── WIRING TABLE ── */
+        .wiring-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--line-light);
+            font-size: 13px;
+        }
+
+        .pin-badge {
+            background: var(--ink);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .pin-arrow {
+            color: var(--ink-muted);
+            font-size: 12px;
+        }
+
+        /* ── FOOTER ── */
+        .doc-footer {
+            padding: 24px 52px;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--ink-muted);
+        }
+
+        /* ── PRINT BUTTON ── */
+        .print-bar {
+            text-align: right;
+            margin-bottom: 16px;
+        }
+
+        .print-btn {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            background: var(--ink);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 4px;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+        }
+
+        .print-btn:hover {
+            background: #333;
+        }
+
+        @media print {
+            body { background: white; }
+            .page-shell { padding: 0; }
+            .doc { box-shadow: none; border-radius: 0; }
+            .print-bar { display: none; }
+            .section { page-break-inside: avoid; }
+            table { page-break-inside: auto; }
+            tr { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-shell">
+    <div class="print-bar">
+        <button class="print-btn" onclick="window.print()">Save as PDF</button>
+    </div>
+
+    <div class="doc">
+
+        <!-- HEADER -->
+        <div class="doc-header">
+            <div class="tag">Procurement Document</div>
+            <h1>Hardware Shopping List</h1>
+            <p class="subtitle">FasalAstra — Autonomous Weed Detection & Precision Spraying System</p>
+            <div class="meta-row">
+                <div class="meta-item"><span class="label">Prepared for</span><span class="value">Team THE DEVILS</span></div>
+                <div class="meta-item"><span class="label">Date</span><span class="value">April 2026</span></div>
+                <div class="meta-item"><span class="label">Revision</span><span class="value">1.0</span></div>
+                <div class="meta-item"><span class="label">Total Items</span><span class="value">35</span></div>
+            </div>
+        </div>
+
+        <div class="doc-body">
+
+            <!-- ====== SECTION A ====== -->
+            <div class="section">
+                <div class="section-label">Section A</div>
+                <h2 class="section-title">Microcontroller Unit</h2>
+                <table>
+                    <thead><tr><th class="check-col"></th><th>Item</th><th>Qty</th><th>Est. Price</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">ESP32-S3 DevKit-C (N16R8)</span><span class="item-spec">Dual-core 240 MHz, 8 MB PSRAM, 16 MB Flash, USB-C</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;800 – 1,200</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">USB-C Data Cable</span><span class="item-spec">USB-C to USB-A, data-capable (not charge-only), 1 m</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;100 – 200</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="callout danger">
+                    <span class="callout-icon">!</span>
+                    <div class="callout-body"><b>Critical:</b> Must be the <b>N16R8</b> or <b>N8R8</b> variant with 8 MB PSRAM. A basic ESP32 or ESP32-S3 without PSRAM cannot load the TFLite model. Confirm &ldquo;PSRAM: 8 MB&rdquo; on the product listing before purchasing.</div>
+                </div>
+            </div>
+
+            <!-- ====== SECTION B ====== -->
+            <div class="section">
+                <div class="section-label">Section B</div>
+                <h2 class="section-title">Camera Module</h2>
+                <table>
+                    <thead><tr><th class="check-col"></th><th>Item</th><th>Qty</th><th>Est. Price</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">OV2640 Camera Module</span><span class="item-spec">2 MP, CSI ribbon interface, ESP32-S3 compatible</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;200 – 350</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">CSI Ribbon Cable (24-pin)</span><span class="item-spec">24-pin FPC, 5–8 cm — usually included with camera module</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">Included</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="callout info">
+                    <span class="callout-icon">i</span>
+                    <div class="callout-body">Ask for &ldquo;ESP32-CAM OV2640 module&rdquo; at the shop. Verify that the ribbon cable connector pitch matches your specific ESP32-S3 board&rsquo;s CSI socket.</div>
+                </div>
+            </div>
+
+            <!-- ====== SECTION C ====== -->
+            <div class="section">
+                <div class="section-label">Section C</div>
+                <h2 class="section-title">Inertial Measurement Unit</h2>
+                <table>
+                    <thead><tr><th class="check-col"></th><th>Item</th><th>Qty</th><th>Est. Price</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">MPU6050 Breakout Board (GY-521)</span><span class="item-spec">6-axis accelerometer + gyroscope, I2C address 0x68, 3.3 V / 5 V</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;100 – 180</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Female-to-Female Dupont Wires (10 cm)</span><span class="item-spec">For I2C bus: SDA, SCL, VCC, GND</span></td>
+                            <td class="qty">4</td>
+                            <td class="price">&#8377;40 (pack of 10)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="section-note"><b>Wiring reference:</b></p>
+                <div class="wiring-row"><span class="pin-badge">GPIO 8</span> <span class="pin-arrow">&rarr;</span> SDA (data)</div>
+                <div class="wiring-row"><span class="pin-badge">GPIO 9</span> <span class="pin-arrow">&rarr;</span> SCL (clock)</div>
+                <div class="wiring-row"><span class="pin-badge">3.3V</span> <span class="pin-arrow">&rarr;</span> VCC</div>
+                <div class="wiring-row"><span class="pin-badge">GND</span> <span class="pin-arrow">&rarr;</span> GND</div>
+            </div>
+
+            <!-- ====== SECTION D ====== -->
+            <div class="section">
+                <div class="section-label">Section D</div>
+                <h2 class="section-title">Spray Actuation Circuit</h2>
+                <table>
+                    <thead><tr><th class="check-col"></th><th>Item</th><th>Qty</th><th>Est. Price</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">12 V DC Solenoid Valve (Normally Closed)</span><span class="item-spec">NC type, 1/2&Prime; or 1/4&Prime; inlet/outlet, plastic or brass body</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;250 – 500</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">IRLZ44N N-Channel MOSFET</span><span class="item-spec">Logic-level gate (V<sub>gs(th)</sub> &le; 2 V), TO-220 package</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;30 – 50</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">1N4007 Rectifier Diode</span><span class="item-spec">1 A, 1000 V — flyback protection for solenoid</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;5 – 10</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">10 k&Omega; Resistor</span><span class="item-spec">1/4 W carbon film — pull-down on MOSFET gate</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;2</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">220 &Omega; Resistor</span><span class="item-spec">1/4 W carbon film — LED current limiter</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;2</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="callout danger">
+                    <span class="callout-icon">!</span>
+                    <div class="callout-body"><b>Do not substitute the MOSFET.</b> A standard IRF540N requires 10 V gate drive and will not switch from an ESP32&rsquo;s 3.3 V output. You specifically need <b>IRLZ44N</b> (note the &ldquo;L&rdquo; for logic-level). Acceptable alternatives: IRL540N, IRL3803, AO3400 (SMD).</div>
+                </div>
+                <div class="callout warn">
+                    <span class="callout-icon">!</span>
+                    <div class="callout-body"><b>Verify valve type.</b> The solenoid must be <b>Normally Closed</b> (NC) so that the spray is off by default. A Normally Open (NO) valve would spray continuously and only stop when powered — this is unsafe.</div>
+                </div>
+            </div>
+
+            <!-- ====== SECTION E ====== -->
+            <div class="section">
+                <div class="section-label">Section E</div>
+                <h2 class="section-title">Power Supply</h2>
+                <table>
+                    <thead><tr><th class="check-col"></th><th>Item</th><th>Qty</th><th>Est. Price</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">12 V 2 A DC Power Adapter</span><span class="item-spec">Barrel jack 5.5 &times; 2.1 mm output</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;150 – 250</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">DC Barrel Jack Breakout Board</span><span class="item-spec">Female barrel socket to screw terminal</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;20 – 40</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">USB Power Bank (5 V 2 A)</span><span class="item-spec">10,000 mAh or above — powers ESP32 in the field</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;500 – 800</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="callout info">
+                    <span class="callout-icon">i</span>
+                    <div class="callout-body"><b>Two separate supplies required.</b> The ESP32 runs on 5 V via USB. The solenoid runs on 12 V via the adapter. Both circuits must share a <b>common ground</b> connection for the MOSFET driver to function.</div>
+                </div>
+
+                <p class="section-note" style="margin-top:20px"><b>Optional — portable 12 V for field deployment:</b></p>
+                <table>
+                    <thead><tr><th class="check-col"></th><th>Item</th><th>Qty</th><th>Est. Price</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">3S LiPo Battery (11.1 V)</span><span class="item-spec">2200 mAh, XT60 connector</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;800 – 1,200</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">XT60 to Barrel Jack Adapter</span><span class="item-spec">Or solder bare wires directly</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;50</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ====== SECTION F ====== -->
+            <div class="section">
+                <div class="section-label">Section F</div>
+                <h2 class="section-title">Indicators & Prototyping</h2>
+                <table>
+                    <thead><tr><th class="check-col"></th><th>Item</th><th>Qty</th><th>Est. Price</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Green LED (5 mm)</span><span class="item-spec">Standard through-hole, 2 V forward voltage</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;5</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Red LED (5 mm)</span><span class="item-spec">Standard through-hole — error / firing indicator</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;5</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Breadboard (830 tie-point)</span><span class="item-spec">Full-size solderless breadboard</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;100 – 150</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Male-to-Male Jumper Wires (20 cm)</span><span class="item-spec">Assorted colours, pack of 20</span></td>
+                            <td class="qty">1 pack</td>
+                            <td class="price">&#8377;60</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Male-to-Female Jumper Wires (20 cm)</span><span class="item-spec">Assorted colours, pack of 10</span></td>
+                            <td class="qty">1 pack</td>
+                            <td class="price">&#8377;40</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Screw Terminal Block (2-pin)</span><span class="item-spec">5 mm pitch, PCB mount</span></td>
+                            <td class="qty">2</td>
+                            <td class="price">&#8377;20</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ====== SECTION G ====== -->
+            <div class="section">
+                <div class="section-label">Section G</div>
+                <h2 class="section-title">Tools & Consumables</h2>
+                <p class="section-note">Skip items you already own.</p>
+                <table>
+                    <thead><tr><th class="check-col"></th><th>Item</th><th>Qty</th><th>Est. Price</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Soldering Iron (25–30 W)</span><span class="item-spec">Temperature-adjustable preferred</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;200 – 400</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Solder Wire (60/40 rosin-core)</span><span class="item-spec">0.8 mm diameter, 25 g roll</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;80</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Wire Stripper / Cutter</span><span class="item-spec">Small hand tool</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;100</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Digital Multimeter</span><span class="item-spec">Measures voltage, resistance, continuity</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;300 – 500</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Electrical Tape</span><span class="item-spec">Black, standard insulation</span></td>
+                            <td class="qty">1 roll</td>
+                            <td class="price">&#8377;20</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Heat-Shrink Tubing (assorted)</span><span class="item-spec">2 mm, 4 mm, 6 mm variety pack</span></td>
+                            <td class="qty">1 pack</td>
+                            <td class="price">&#8377;50</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Hot-Glue Gun + Sticks</span><span class="item-spec">For mounting components on wand body</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;100</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ====== SECTION H ====== -->
+            <div class="section">
+                <div class="section-label">Section H</div>
+                <h2 class="section-title">Physical Spray Assembly</h2>
+                <table>
+                    <thead><tr><th class="check-col"></th><th>Item</th><th>Qty</th><th>Est. Price</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">PVC Pipe (1/2&Prime;, 1 metre)</span><span class="item-spec">Schedule 40 or equivalent — wand body</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;40 – 60</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Spray Nozzle Tip</span><span class="item-spec">Flat fan or adjustable cone pattern</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;30 – 60</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Silicone Tubing (6 mm ID)</span><span class="item-spec">Food-grade, 1 metre length</span></td>
+                            <td class="qty">1 m</td>
+                            <td class="price">&#8377;40 – 80</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Herbicide Reservoir</span><span class="item-spec">500 mL – 1 L bottle with tube fitting</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;50</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Hose Clamps (worm-drive)</span><span class="item-spec">Stainless steel, 6–12 mm range</span></td>
+                            <td class="qty">4</td>
+                            <td class="price">&#8377;40</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Cable Ties (zip ties)</span><span class="item-spec">100 mm + 200 mm, assorted pack</span></td>
+                            <td class="qty">1 pack</td>
+                            <td class="price">&#8377;30</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><span class="checkbox"></span></td>
+                            <td><span class="item-name">Camera Mount Bracket</span><span class="item-spec">Small L-bracket — must hold camera at 45&deg; angle</span></td>
+                            <td class="qty">1</td>
+                            <td class="price">&#8377;20 – 50</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ====== COST SUMMARY ====== -->
+            <div class="section">
+                <div class="section-label">Summary</div>
+                <h2 class="section-title">Budget Estimate</h2>
+
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="card-label">Core Prototype</div>
+                        <div class="card-value">&#8377;2,050 – 3,180</div>
+                        <div class="card-sub">Sections A through F — minimum viable hardware</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-label">Full Field-Ready Kit</div>
+                        <div class="card-value">&#8377;3,660 – 5,710</div>
+                        <div class="card-sub">All sections including tools, assembly, and portable battery</div>
+                    </div>
+                </div>
+
+                <table>
+                    <thead><tr><th>Category</th><th>Covers</th><th>Sub-total</th></tr></thead>
+                    <tbody>
+                        <tr><td>A. Microcontroller</td><td>ESP32-S3 + cable</td><td class="price">&#8377;900 – 1,400</td></tr>
+                        <tr><td>B. Camera</td><td>OV2640 + ribbon</td><td class="price">&#8377;200 – 350</td></tr>
+                        <tr><td>C. IMU</td><td>MPU6050 + wires</td><td class="price">&#8377;140 – 220</td></tr>
+                        <tr><td>D. Spray circuit</td><td>Solenoid + MOSFET + diode + resistors</td><td class="price">&#8377;290 – 565</td></tr>
+                        <tr><td>E. Power</td><td>12 V adapter + breakout + power bank</td><td class="price">&#8377;670 – 1,090</td></tr>
+                        <tr><td>F. Prototyping</td><td>Breadboard + jumpers + LEDs + terminals</td><td class="price">&#8377;230 – 280</td></tr>
+                        <tr><td>G. Tools</td><td>Soldering + multimeter + consumables</td><td class="price">&#8377;850 – 1,250</td></tr>
+                        <tr><td>H. Assembly</td><td>PVC + nozzle + tubing + clamps</td><td class="price">&#8377;250 – 370</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ====== COMMON MISTAKES ====== -->
+            <div class="section">
+                <div class="section-label">Reference</div>
+                <h2 class="section-title">Common Purchasing Mistakes</h2>
+                <p class="section-note">Review this list before finalising your order.</p>
+
+                <ul class="mistake-list">
+                    <li>
+                        <span class="dont-icon">&times;</span>
+                        <div><b>Buying a basic ESP32 without PSRAM.</b> The TFLite model requires 8 MB PSRAM to load. Confirm the S3 variant with OPI PSRAM before paying.</div>
+                    </li>
+                    <li>
+                        <span class="dont-icon">&times;</span>
+                        <div><b>Buying IRF540N instead of IRLZ44N.</b> The &ldquo;L&rdquo; in the part number indicates logic-level gate threshold. IRF540N needs 10 V to switch — ESP32 outputs 3.3 V.</div>
+                    </li>
+                    <li>
+                        <span class="dont-icon">&times;</span>
+                        <div><b>Buying a Normally Open (NO) solenoid.</b> An NO valve sprays by default and stops only when powered. You need a Normally Closed (NC) valve for fail-safe operation.</div>
+                    </li>
+                    <li>
+                        <span class="dont-icon">&times;</span>
+                        <div><b>Skipping the 1N4007 flyback diode.</b> When the solenoid turns off, it produces a voltage spike that can permanently damage the ESP32. This &#8377;5 diode prevents that.</div>
+                    </li>
+                    <li>
+                        <span class="dont-icon">&times;</span>
+                        <div><b>Using a charge-only USB cable.</b> Charge-only cables lack the data pins needed for programming and serial debug. Test the cable with a file transfer before heading to the field.</div>
+                    </li>
+                    <li>
+                        <span class="dont-icon">&times;</span>
+                        <div><b>Connecting 12 V directly to ESP32.</b> The solenoid circuit is a separate 12 V loop. The ESP32 runs on 5 V USB. They only share a common GND wire.</div>
+                    </li>
+                </ul>
+            </div>
+
+        </div><!-- /doc-body -->
+
+        <!-- FOOTER -->
+        <div class="doc-footer">
+            <span>FasalAstra &middot; Team THE DEVILS</span>
+            <span>Hardware Procurement List &middot; Rev 1.0 &middot; April 2026</span>
+        </div>
+
+    </div><!-- /doc -->
+</div><!-- /page-shell -->
+
+</body>
+</html>

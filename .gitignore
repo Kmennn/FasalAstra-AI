@@ -1,0 +1,21 @@
+# Virtual environments
+fasal_env/
+venv/
+env/
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary or local directories
+true/
+.vscode/
+
+# Datasets and large weights
+# datasets/
+# runs/
+*.pt
+!models/*.pt
+!models/*.tflite
