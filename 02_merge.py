@@ -10,8 +10,18 @@ import os
 import shutil
 import yaml
 
-DATASETS   = ['datasets/ds1', 'datasets/ds2',
-              'datasets/ds3', 'datasets/ds4']
+DATASETS = [
+    'datasets/ds1_general_weed',
+    'datasets/ds2_augmented_weeds',
+    'datasets/ds3_dense_weeds',
+    'datasets/ds4_cotton_weed',      # NEW Indian cotton
+    'datasets/ds5_paddy_weed',       # NEW Indian rice
+    'datasets/ds6_crop_and_weed',    # NEW both labeled
+    'datasets/ds7_canopy_weeds',     # NEW under canopy
+    'datasets/ds8_maize_weed',       # NEW maize canopy
+    'datasets/ds9_mixed_conditions', # NEW varied lighting
+    'datasets/ds10_varied_soil',     # NEW varied soil
+]
 MERGED_DIR = 'datasets/merged'
 
 def infer_num_classes():
