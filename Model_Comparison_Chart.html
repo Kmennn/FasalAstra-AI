@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FasalAstra AI — Model Architecture Comparison</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e17;
+    --surface: #111827;
+    --surface-2: #1a2332;
+    --border: #1e293b;
+    --border-glow: #334155;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    --accent: #22c55e;
+    --accent-glow: rgba(34,197,94,0.15);
+    --gold: #f59e0b;
+    --gold-glow: rgba(245,158,11,0.12);
+    --red: #ef4444;
+    --red-soft: rgba(239,68,68,0.12);
+    --blue: #3b82f6;
+    --blue-glow: rgba(59,130,246,0.12);
+    --purple: #a855f7;
+    --purple-glow: rgba(168,85,247,0.12);
+    --cyan: #06b6d4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 24px;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ─── Header ─── */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(34,197,94,0.25);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 24px;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .header p {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .header p strong { color: var(--accent); font-weight: 600; }
+
+  /* ─── Stats Row ─── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+  .stat-card:hover { border-color: var(--border-glow); }
+  .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+
+  /* ─── Table ─── */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .table-title {
+    padding: 20px 28px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .table-title .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead th {
+    background: var(--surface-2);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-dim);
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 16px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(30,41,59,0.6);
+    vertical-align: middle;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr { transition: background 0.2s; }
+  tbody tr:hover { background: rgba(30,41,59,0.4); }
+
+  /* Winner row */
+  tr.winner {
+    background: var(--accent-glow) !important;
+    position: relative;
+  }
+  tr.winner td { font-weight: 500; }
+  tr.winner td:first-child { font-weight: 700; }
+
+  /* Model name cell */
+  .model-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
+  .model-name .badge-winner {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #000;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  /* Pill tags */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .pill-green  { background: rgba(34,197,94,0.12);  color: #4ade80; }
+  .pill-yellow { background: rgba(250,204,21,0.1);  color: #facc15; }
+  .pill-orange { background: rgba(251,146,60,0.12); color: #fb923c; }
+  .pill-red    { background: rgba(248,113,113,0.1);  color: #f87171; }
+  .pill-blue   { background: rgba(96,165,250,0.1);  color: #60a5fa; }
+  .pill-purple { background: rgba(192,132,252,0.1); color: #c084fc; }
+
+  /* Bar meter */
+  .bar-cell { min-width: 140px; }
+  .bar-outer {
+    width: 100%;
+    height: 8px;
+    background: rgba(30,41,59,0.8);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+  .bar-inner {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+  }
+  .bar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Use-case column */
+  .use-case {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ─── Verdict Card ─── */
+  .verdict {
+    background: linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(16,185,129,0.03) 100%);
+    border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+  .verdict-icon {
+    flex-shrink: 0;
+    width: 56px; height: 56px;
+    background: var(--accent);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 0 24px rgba(34,197,94,0.3);
+  }
+  .verdict h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .verdict p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .verdict p strong { color: var(--text); }
+
+  /* ─── Comparison Grid ─── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .compare-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .compare-card:hover { border-color: var(--border-glow); transform: translateY(-2px); }
+  .compare-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .compare-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .compare-card .detail {
+    margin-top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    background: var(--surface-2);
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+
+  /* ─── Footer ─── */
+  .footer {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* ─── Print ─── */
+  @media print {
+    body { background: #fff; color: #111; padding: 20px; }
+    .table-wrap, .stat-card, .compare-card, .verdict {
+      border-color: #e2e8f0;
+      background: #fff;
+    }
+    thead th { background: #f1f5f9; color: #334155; }
+    tbody td { color: #334155; border-color: #e2e8f0; }
+    .header h1 { background: none; -webkit-text-fill-color: #111; }
+    tr.winner { background: rgba(34,197,94,0.08) !important; }
+    .pill { border: 1px solid currentColor; }
+  }
+
+  @media (max-width: 768px) {
+    .table-wrap { overflow-x: auto; }
+    table { min-width: 820px; }
+    .verdict { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-badge">
+      <span>●</span> FasalAstra AI — Architecture Study
+    </div>
+    <h1>Model Comparison for<br>Edge-Deployed Weed Detection</h1>
+    <p>
+      Evaluating <strong>8 architectures</strong> for real-time crop/weed/soil classification
+      on <strong>Raspberry Pi 4</strong> at 320×320 px — optimised for Indian farmland conditions.
+    </p>
+  </div>
+
+  <!-- Our Model Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value" style="color: var(--accent);">YOLO11n</div>
+      <div class="stat-label">Selected Model</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color: var(--gold);">71.4%</div>
+      <div class="stat-label">mAP@50 Achieved</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color: var(--cyan);">2.6M</div>
+      <div class="stat-label">Parameters</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color: var(--blue);">6.4</div>
+      <div class="stat-label">GFLOPs</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color: var(--purple);">18-22</div>
+      <div class="stat-label">FPS on RPi4 (NCNN)</div>
+    </div>
+  </div>
+
+  <!-- Main Comparison Table -->
+  <div class="table-wrap">
+    <div class="table-title">
+      <span class="dot"></span>
+      Architecture Comparison — Edge Weed Detection (RPi4 / ESP32-S3)
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Accuracy (mAP50)</th>
+          <th>Edge Speed (RPi4)</th>
+          <th>Memory (RAM)</th>
+          <th>Params</th>
+          <th>Best Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- YOLO11n — Winner -->
+        <tr class="winner">
+          <td>
+            <div class="model-name">
+              YOLO11n
+              <span class="badge-winner">★ Selected</span>
+            </div>
+          </td>
+          <td>
+            <div class="bar-cell">
+              <div class="bar-outer"><div class="bar-inner" style="width:71%;background:linear-gradient(90deg,#22c55e,#4ade80);"></div></div>
+              <span class="bar-label">71.4% — High</span>
+            </div>
+          </td>
+          <td><span class="pill pill-green">⚡ 18-22 FPS</span></td>
+          <td><span class="pill pill-green">≈ 5.4 MB</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-size:13px;">2.6M</td>
+          <td class="use-case">Real-time RPi4 weed detection.<br>Best accuracy/speed tradeoff for edge.</td>
+        </tr>
+
+        <!-- YOLOv8n -->
+        <tr>
+          <td><div class="model-name">YOLOv8n</div></td>
+          <td>
+            <div class="bar-cell">
+              <div class="bar-outer"><div class="bar-inner" style="width:66%;background:linear-gradient(90deg,#3b82f6,#60a5fa);"></div></div>
+              <span class="bar-label">~66% — Moderate</span>
+            </div>
+          </td>
+          <td><span class="pill pill-green">⚡ 16-20 FPS</span></td>
+          <td><span class="pill pill-green">≈ 6.2 MB</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-size:13px;">3.2M</td>
+          <td class="use-case">Previous generation edge detection.<br>Slightly less accurate than v11.</td>
+        </tr>
+
+        <!-- YOLOv9-t -->
+        <tr>
+          <td><div class="model-name">YOLOv9-t</div></td>
+          <td>
+            <div class="bar-cell">
+              <div class="bar-outer"><div class="bar-inner" style="width:74%;background:linear-gradient(90deg,#f59e0b,#fbbf24);"></div></div>
+              <span class="bar-label">~74% — High</span>
+            </div>
+          </td>
+          <td><span class="pill pill-yellow">🔸 8-12 FPS</span></td>
+          <td><span class="pill pill-yellow">≈ 14 MB</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-size:13px;">7.7M</td>
+          <td class="use-case">General-purpose weed detection.<br>Too heavy for real-time RPi4.</td>
+        </tr>
+
+        <!-- YOLOv10n -->
+        <tr>
+          <td><div class="model-name">YOLOv10n</div></td>
+          <td>
+            <div class="bar-cell">
+              <div class="bar-outer"><div class="bar-inner" style="width:69%;background:linear-gradient(90deg,#3b82f6,#60a5fa);"></div></div>
+              <span class="bar-label">~69% — Moderate</span>
+            </div>
+          </td>
+          <td><span class="pill pill-green">⚡ 15-19 FPS</span></td>
+          <td><span class="pill pill-green">≈ 5.8 MB</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-size:13px;">2.7M</td>
+          <td class="use-case">NMS-free detection. Fast but lower<br>mAP than YOLO11n on ag datasets.</td>
+        </tr>
+
+        <!-- YOLO-World -->
+        <tr>
+          <td><div class="model-name">YOLO-World-S</div></td>
+          <td>
+            <div class="bar-cell">
+              <div class="bar-outer"><div class="bar-inner" style="width:55%;background:linear-gradient(90deg,#a855f7,#c084fc);"></div></div>
+              <span class="bar-label">~55% — Medium</span>
+            </div>
+          </td>
+          <td><span class="pill pill-orange">🐢 3-5 FPS</span></td>
+          <td><span class="pill pill-red">≈ 110 MB</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-size:13px;">28M</td>
+          <td class="use-case">Zero-shot detection of novel weeds.<br>Too slow + large for edge deploy.</td>
+        </tr>
+
+        <!-- Grounding DINO -->
+        <tr>
+          <td><div class="model-name">Grounding DINO-T</div></td>
+          <td>
+            <div class="bar-cell">
+              <div class="bar-outer"><div class="bar-inner" style="width:82%;background:linear-gradient(90deg,#ef4444,#f87171);"></div></div>
+              <span class="bar-label">~82% — Very High</span>
+            </div>
+          </td>
+          <td><span class="pill pill-red">🚫 &lt;1 FPS</span></td>
+          <td><span class="pill pill-red">≈ 662 MB</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-size:13px;">172M</td>
+          <td class="use-case">Context-rich, text-guided detection.<br>Impossible on RPi4 / ESP32-S3.</td>
+        </tr>
+
+        <!-- MobileNet SSD -->
+        <tr>
+          <td><div class="model-name">MobileNetV3-SSD</div></td>
+          <td>
+            <div class="bar-cell">
+              <div class="bar-outer"><div class="bar-inner" style="width:48%;background:linear-gradient(90deg,#64748b,#94a3b8);"></div></div>
+              <span class="bar-label">~48% — Low</span>
+            </div>
+          </td>
+          <td><span class="pill pill-green">⚡ 20-28 FPS</span></td>
+          <td><span class="pill pill-green">≈ 4.2 MB</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-size:13px;">1.5M</td>
+          <td class="use-case">Ultra-light classification. Fast<br>but poor bounding-box accuracy.</td>
+        </tr>
+
+        <!-- EfficientDet-Lite0 -->
+        <tr>
+          <td><div class="model-name">EfficientDet-Lite0</div></td>
+          <td>
+            <div class="bar-cell">
+              <div class="bar-outer"><div class="bar-inner" style="width:52%;background:linear-gradient(90deg,#06b6d4,#22d3ee);"></div></div>
+              <span class="bar-label">~52% — Medium</span>
+            </div>
+          </td>
+          <td><span class="pill pill-yellow">🔸 10-14 FPS</span></td>
+          <td><span class="pill pill-green">≈ 4.4 MB</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-size:13px;">3.9M</td>
+          <td class="use-case">TFLite-optimised edge detection.<br>Decent speed, weaker accuracy.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Verdict -->
+  <div class="verdict">
+    <div class="verdict-icon">🏆</div>
+    <div>
+      <h3>Verdict: YOLO11n is the Optimal Choice for FasalAstra</h3>
+      <p>
+        After evaluating 8 architectures, <strong>YOLO11n</strong> delivers the best balance of
+        <strong>accuracy (71.4% mAP50)</strong>, <strong>edge speed (18-22 FPS on RPi4 via NCNN)</strong>,
+        and <strong>memory footprint (2.6M params / 5.4 MB)</strong> for real-time weed detection
+        on resource-constrained hardware. Larger models like Grounding DINO achieve higher accuracy
+        but are physically impossible to run on a Raspberry Pi 4 or ESP32-S3. Lighter models like
+        MobileNetV3-SSD are faster but sacrifice critical detection accuracy needed for precise
+        weed-vs-crop discrimination in Indian farmland conditions.
+      </p>
+    </div>
+  </div>
+
+  <!-- Why Not Cards -->
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h4>🟢 Why YOLO11n Wins</h4>
+      <p>
+        Latest C2PSA attention mechanism, improved feature pyramid, and 15% fewer FLOPs
+        than YOLOv8n at higher mAP. Native ONNX/NCNN export for ARM Cortex-A72.
+      </p>
+      <div class="detail">RPi4 target: 18-22 FPS @ 320px ✓</div>
+    </div>
+    <div class="compare-card">
+      <h4>🟡 Why Not YOLOv9</h4>
+      <p>
+        PGI + GELAN architecture is more accurate but 3× heavier (7.7M params).
+        Drops below real-time (8-12 FPS) on RPi4 — unacceptable for live spraying.
+      </p>
+      <div class="detail">RPi4 reality: 8-12 FPS — too slow ✗</div>
+    </div>
+    <div class="compare-card">
+      <h4>🔴 Why Not Grounding DINO</h4>
+      <p>
+        Transformer-based model requires 662 MB VRAM minimum. RPi4 has 1-4 GB shared RAM.
+        Inference takes 2-5 seconds per frame — impractical for real-time agriculture.
+      </p>
+      <div class="detail">RPi4 reality: &lt;1 FPS — impossible ✗</div>
+    </div>
+    <div class="compare-card">
+      <h4>🔵 Why Not MobileNet</h4>
+      <p>
+        Extremely fast (28 FPS) but only ~48% mAP — too many false positives would cause
+        the solenoid to spray herbicide on crops, defeating the purpose.
+      </p>
+      <div class="detail">Accuracy gap: 23% lower mAP ✗</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    FasalAstra AI — Model Architecture Analysis &nbsp;|&nbsp; April 2026 &nbsp;|&nbsp;
+    Benchmarks at 320×320 px, 3 classes (weed / crop / soil)
+  </div>
+
+</div>
+
+</body>
+</html>

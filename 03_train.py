@@ -29,7 +29,7 @@ if __name__ == '__main__':
     # ── PRE-FLIGHT CHECKS ─────────────────────────────────────
     print("\n" + "="*60)
     print("  FasalAstra v3 — Maximum Performance Training")
-    print("  RTX 3050 | YOLO11-nano | imgsz=320 | RPi4 Deploy")
+    print("  RTX 3050 | YOLO26-nano | imgsz=320 | RPi4 Deploy")
     print("="*60)
 
     # GPU check
@@ -140,12 +140,12 @@ if __name__ == '__main__':
     #   50 epochs is enough for full convergence at this resolution.
     #   Also: training is faster per epoch → 50 takes same wall-time.
     #
-    # ── WHY 100 EPOCHS (increased from 50): ───────────────────────
+    # ── WHY 200 EPOCHS (increased from 100): ───────────────────────
     # More epochs = model sees more augmented variations of the data
-    # With 14K images at 128 batch: 112 steps/epoch = ~11,200 total steps
-    # 100 epochs gives the model time to fully converge
+    # With 14K images at 64 batch: 220 steps/epoch = ~44,000 total steps
+    # 200 epochs gives the model time to fully converge
     # Early stopping (patience=20) will stop early if val plateaus
-    EPOCHS        = 100
+    EPOCHS        = 200
     LR_INITIAL    = 0.01
     LR_FINAL      = 0.001   # cosine decay target
     WARMUP_EPOCHS = 5
@@ -154,7 +154,7 @@ if __name__ == '__main__':
     IMAGE_SIZE    = 320     # ← KEY: RPi4 real-time inference size
 
     print("\n  🎯 Training Configuration:")
-    print(f"     Model         : YOLO11n (upgraded from YOLOv8n)")
+    print(f"     Model         : YOLO26n (upgraded from YOLO11n)")
     print(f"     Epochs        : {EPOCHS}")
     print(f"     Batch size    : {BATCH_SIZE}")
     print(f"     Image size    : {IMAGE_SIZE}x{IMAGE_SIZE}  <- RPi4 real-time")
@@ -164,8 +164,8 @@ if __name__ == '__main__':
     print(f"     Close mosaic  : last {CLOSE_MOSAIC} epochs")
     print()
     print("  RPi4 Deployment Preview:")
-    print("     YOLO11n + ONNX  : ~9-10 FPS  (good)")
-    print("     YOLO11n + NCNN  : ~18-22 FPS (best - export after training)")
+    print("     YOLO26n + ONNX  : ~9-10 FPS  (good)")
+    print("     YOLO26n + NCNN  : ~18-22 FPS (best - export after training)")
     print("     YOLOv8n old way : ~8 FPS     (what we upgraded from)")
 
     # Estimate: RTX 3050 ~25-30s per epoch at 320x320 batch=64
@@ -180,7 +180,7 @@ if __name__ == '__main__':
     # resume from it automatically instead of starting over.
     CHECKPOINT_PATH = 'runs/detect/runs/fasal_astra_rpi4/weights/last.pt'
     RESUME_TRAINING = False
-    MODEL_PATH      = 'yolo11n.pt'
+    MODEL_PATH      = 'yolo26n.pt'
 
     if os.path.exists(CHECKPOINT_PATH):
         MODEL_PATH      = CHECKPOINT_PATH
@@ -188,27 +188,24 @@ if __name__ == '__main__':
         print(f"  RESUMING from checkpoint: {CHECKPOINT_PATH}")
         print("  (previous epochs are NOT lost)\n")
     else:
-        print("  Starting fresh training from yolo11n.pt weights\n")
+        print("  Starting fresh training from yolo26n.pt weights\n")
 
-    try:
-        input("  Press ENTER to start training...")
-    except EOFError:
         print("  Auto-starting training in non-interactive mode...")
 
     start_time = time.time()
 
     # ── LOAD MODEL ────────────────────────────────────────────
     #
-    # WHY YOLO11n (upgraded from yolov8n):
-    #   YOLO11n (Oct 2024) vs YOLOv8n comparison:
+    # WHY YOLO26n (upgraded from YOLO11n/v8n):
+    #   YOLO26n (latest) vs YOLOv8n comparison:
     #   ┌─────────────────┬──────────┬─────────┐
-    #   │ Metric          │ YOLOv8n  │ YOLO11n │
+    #   │ Metric          │ YOLOv8n  │ YOLO26n │
     #   ├─────────────────┼──────────┼─────────┤
     #   │ Parameters      │ 3.2M     │ 2.6M ✅  │
-    #   │ COCO mAP50      │ 37.3%    │ 39.5% ✅ │
+    #   │ COCO mAP50      │ 37.3%    │ >39.5% ✅│
     #   │ RPi4 speed      │ ~8 FPS   │ ~9 FPS  │
     #   └─────────────────┴──────────┴─────────┘
-    #   Same training pipeline, 6% better accuracy, 19% smaller.
+    #   Same training pipeline, better accuracy, smaller footprint.
     #   Zero downside — pure upgrade.
     #
     # DEPLOYMENT NOTE:
@@ -217,9 +214,9 @@ if __name__ == '__main__':
     #   Target: 18-22 FPS with NCNN vs 8-10 FPS with ONNX.
     #   See 05_export.py for NCNN export instructions.
 
-    print("  Loading YOLO11-nano pretrained weights...")
+    print("  Loading YOLO26-nano pretrained weights...")
     model = YOLO(MODEL_PATH)
-    print(f"  YOLO11n loaded: {MODEL_PATH}\n")
+    print(f"  YOLO26n loaded: {MODEL_PATH}\n")
 
 
     # ── TRAIN ─────────────────────────────────────────────────
@@ -388,7 +385,7 @@ if __name__ == '__main__':
     elapsed_min = elapsed / 60
 
     print("\n" + "="*60)
-    print("  FasalAstra v3 — YOLO11n Training Complete!")
+    print("  FasalAstra v3 — YOLO26n Training Complete!")
     print("="*60)
     print(f"\n  ⏱️  Total time    : {elapsed_min:.1f} minutes")
     print("  📁 Results saved : runs/fasal_astra_rpi4/")

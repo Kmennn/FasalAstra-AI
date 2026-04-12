@@ -61,13 +61,13 @@ DATASET_CONFIGS = [
         'name':    'rf04',
     },
 
-    # rf_05_mixed: nc=2, unlabeled classes -> 0=crop, 1=weed (by convention)
+    # kg_03_crop_weed_bbox: classes.txt -> 0=crop, 1=weed
     {
-        'path':    'datasets/rf_05_mixed',
-        'pattern': 'rf',
+        'path':    'datasets/kg_03_crop_weed_bbox',
+        'pattern': 'mixed_dir',
         'remap':   {0: CROP, 1: WEED},
         'skip':    set(),
-        'name':    'rf05',
+        'name':    'kg03',
     },
 
     # rf_06_project_weeds: nc=1, names=['Weeds'=0]
@@ -177,6 +177,29 @@ def collect_pairs_rf_sub(ds_cfg):
     return pairs
 
 
+def collect_pairs_mixed_dir(ds_cfg):
+    """Images and labels are in the exact same directory (e.g., kg_03)."""
+    ds_path = ds_cfg['path']
+    pairs = []
+    
+    # Check if there is a 'data' subfolder, e.g. 'agri_data/data'
+    data_dir = os.path.join(ds_path, 'agri_data', 'data')
+    if not os.path.exists(data_dir):
+        data_dir = ds_path
+        
+    if not os.path.isdir(data_dir):
+        return []
+        
+    for fname in os.listdir(data_dir):
+        ext = os.path.splitext(fname)[1].lower()
+        if ext in {'.jpg', '.jpeg', '.png', '.bmp', '.webp'}:
+            stem = os.path.splitext(fname)[0]
+            lbl_path = os.path.join(data_dir, stem + '.txt')
+            if os.path.exists(lbl_path):
+                pairs.append((os.path.join(data_dir, fname), lbl_path))
+    return pairs
+
+
 def rebuild():
     random.seed(SEED)
 
@@ -211,8 +234,9 @@ def rebuild():
     all_pairs_with_cfg = []  # list of (img_path, lbl_path, ds_cfg)
 
     collectors = {
-        'rf':     collect_pairs_rf,
-        'rf_sub': collect_pairs_rf_sub,
+        'rf':        collect_pairs_rf,
+        'rf_sub':    collect_pairs_rf_sub,
+        'mixed_dir': collect_pairs_mixed_dir,
     }
 
     for cfg in DATASET_CONFIGS:
