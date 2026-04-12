@@ -8,7 +8,7 @@ import sys
 from ultralytics import YOLO
 
 if __name__ == '__main__':
-    MODEL_PATH = 'runs/detect/runs/fasal_astra_v23/weights/best.pt'
+    MODEL_PATH = 'runs/detect/runs/fasal_astra_rpi4/weights/best.pt'
     YAML_PATH  = 'datasets/merged/data.yaml'
 
     # Pre-flight checks

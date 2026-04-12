@@ -13,7 +13,7 @@ from ultralytics import YOLO
 import os
 import shutil
 
-MODEL_PATH = 'runs/fasal_astra_v3_rpi/weights/best.pt'
+MODEL_PATH = 'runs/detect/runs/fasal_astra_rpi4/weights/best.pt'
 OUTPUT_DIR = 'models/'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -28,7 +28,7 @@ try:
     print("\n[1/2] Exporting ONNX (for RPi4)...")
     model.export(
         format='onnx',
-        imgsz=640,
+        imgsz=320,
         simplify=True,      # WHY: reduces model graph complexity
         opset=12            # WHY: RPi4 ONNX Runtime supports opset 12
     )
@@ -43,10 +43,10 @@ try:
     )
 
     # Copy to models folder
-    for fname in os.listdir('runs/fasal_astra_v3_rpi/weights/'):
+    for fname in os.listdir('runs/detect/runs/fasal_astra_rpi4/weights/'):
         if fname.endswith('.onnx') or fname.endswith('.tflite'):
             shutil.copy(
-                f'runs/fasal_astra_v3_rpi/weights/{fname}',
+                f'runs/detect/runs/fasal_astra_rpi4/weights/{fname}',
                 f'{OUTPUT_DIR}/{fname}'
             )
 

@@ -190,6 +190,9 @@ if __name__ == '__main__':
     else:
         print("  Starting fresh training from yolo26n.pt weights\n")
 
+    try:
+        input("  Press ENTER to start training...")
+    except EOFError:
         print("  Auto-starting training in non-interactive mode...")
 
     start_time = time.time()
