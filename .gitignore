@@ -14,8 +14,8 @@ true/
 .vscode/
 
 # Datasets and large weights
-# datasets/
-# runs/
+datasets/
+runs/
 *.pt
 !models/*.pt
 !models/*.tflite

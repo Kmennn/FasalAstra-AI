@@ -1,0 +1,356 @@
+{
+  "cotton": {
+    "workspace": {
+      "name": "search",
+      "url": "search",
+      "projects": [
+        {
+          "id": "search/search-goal-in-football-type-1",
+          "type": "object-detection",
+          "name": "Search Goal In Football Type 1",
+          "created": 1676567862.516,
+          "updated": 1676967996.197,
+          "images": 500,
+          "unannotated": 0,
+          "annotation": "Goal-NotGoal",
+          "versions": 1,
+          "public": true,
+          "multilabel": false,
+          "license": "CC BY 4.0",
+          "splits": {
+            "valid": 50,
+            "test": 50,
+            "train": 400
+          },
+          "colors": {
+            "Goal-NotGoal": "#C7FC00",
+            "NotGoal": "#FF00FF",
+            "Goal": "#8622FF"
+          },
+          "classes": {
+            "NotGoal": 107,
+            "Goal": 393
+          },
+          "icon": {
+            "original": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Rw4ZbY1e8c6HwxxBKM0w/original.jpg",
+            "thumb": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Rw4ZbY1e8c6HwxxBKM0w/thumb.jpg",
+            "annotation": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Rw4ZbY1e8c6HwxxBKM0w/annotation-Goal-NotGoal.png"
+          },
+          "preprocessing": {},
+          "augmentation": {}
+        },
+        {
+          "id": "search/search-goal-in-football-type-2",
+          "type": "object-detection",
+          "name": "Search Goal In Football Type 2",
+          "created": 1676567877.151,
+          "updated": 1677165748.622,
+          "images": 500,
+          "unannotated": 0,
+          "annotation": "Goal-NotGoal",
+          "versions": 1,
+          "public": true,
+          "multilabel": false,
+          "license": "CC BY 4.0",
+          "splits": {
+            "export": 0,
+            "valid": 52,
+            "test": 52,
+            "train": 396
+          },
+          "colors": {
+            "Goal-NotGoal": "#C7FC00",
+            "NotGoal": "#FF00FF",
+            "Goal": "#8622FF"
+          },
+          "classes": {
+            "Goal": 117,
+            "NotGoal": 346
+          },
+          "icon": {
+            "original": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/cXbt3MyWn9ksFN8OvEoN/original.jpg",
+            "thumb": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/cXbt3MyWn9ksFN8OvEoN/thumb.jpg",
+            "annotation": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/cXbt3MyWn9ksFN8OvEoN/annotation-Goal-NotGoal.png"
+          },
+          "preprocessing": {},
+          "augmentation": {}
+        },
+        {
+          "id": "search/search-number-in-football",
+          "type": "object-detection",
+          "name": "Search Number In Football",
+          "created": 1675845092.584,
+          "updated": 1676223346.438,
+          "images": 100,
+          "unannotated": 0,
+          "annotation": "Number-Kicker",
+          "versions": 1,
+          "public": true,
+          "multilabel": false,
+          "license": "CC BY 4.0",
+          "splits": {
+            "export": 0,
+            "valid": 10,
+            "test": 10,
+            "train": 80
+          },
+          "colors": {
+            "0": "#C7FC00",
+            "1": "#FFABAB",
+            "2": "#FFFF00",
+            "3": "#00B7EB",
+            "4": "#CCCCCC",
+            "5": "#00FFCE",
+            "6": "#FE0056",
+            "7": "#0000FF",
+            "8": "#0E7AFE",
+            "9": "#FF8000",
+            "Number-Kicker": "#C7FC00",
+            "Kicker": "#FF00FF",
+            "Number": "#8622FF",
+            "-": "#FF00FF",
+            "\u044d": "#8622FF"
+          },
+          "classes": {
+            "0": 61,
+            "1": 186,
+            "2": 197,
+            "3": 116,
+            "4": 71,
+            "5": 108,
+            "6": 52,
+            "7": 83,
+            "8": 45,
+            "9": 93,
+            "Kicker": 1094
+          },
+          "icon": {
+            "original": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/TeAxD4GT1qX7sFHQYn62/original.jpg",
+            "thumb": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/TeAxD4GT1qX7sFHQYn62/thumb.jpg",
+            "annotation": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/TeAxD4GT1qX7sFHQYn62/annotation-Number-Kicker.png"
+          },
+          "preprocessing": {},
+          "augmentation": {}
+        },
+        {
+          "id": "search/search-object-in-football",
+          "type": "object-detection",
+          "name": "Search Object In Football",
+          "created": 1675162113.672,
+          "updated": 1677499188.183,
+          "images": 1100,
+          "unannotated": 0,
+          "annotation": "Ball-Gater-Kicker",
+          "versions": 2,
+          "public": true,
+          "multilabel": false,
+          "license": "CC BY 4.0",
+          "splits": {
+            "export": 0,
+            "valid": 110,
+            "test": 110,
+            "train": 880
+          },
+          "colors": {
+            "Ball-Gater-Kicker": "#C7FC00",
+            "Kicker": "#FF00FF",
+            "Ball": "#8622FF",
+            "Gater": "#FE0056",
+            "Gatter": "#00FFCE",
+            "\\": "#FF8000",
+            "person": "#00B7EB"
+          },
+          "classes": {
+            "Ball": 862,
+            "Gater": 1015,
+            "Kicker": 13141
+          },
+          "icon": {
+            "original": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Fe2inbwdN1Ua2O7Y6kYf/original.jpg",
+            "thumb": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Fe2inbwdN1Ua2O7Y6kYf/thumb.jpg",
+            "annotation": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Fe2inbwdN1Ua2O7Y6kYf/annotation-Ball-Gater-Kicker.png"
+          },
+          "preprocessing": {},
+          "augmentation": {}
+        }
+      ]
+    }
+  },
+  "uq": {
+    "workspace": {
+      "name": "search",
+      "url": "search",
+      "projects": [
+        {
+          "id": "search/search-goal-in-football-type-1",
+          "type": "object-detection",
+          "name": "Search Goal In Football Type 1",
+          "created": 1676567862.516,
+          "updated": 1676967996.197,
+          "images": 500,
+          "unannotated": 0,
+          "annotation": "Goal-NotGoal",
+          "versions": 1,
+          "public": true,
+          "multilabel": false,
+          "license": "CC BY 4.0",
+          "splits": {
+            "valid": 50,
+            "test": 50,
+            "train": 400
+          },
+          "colors": {
+            "Goal-NotGoal": "#C7FC00",
+            "NotGoal": "#FF00FF",
+            "Goal": "#8622FF"
+          },
+          "classes": {
+            "NotGoal": 107,
+            "Goal": 393
+          },
+          "icon": {
+            "original": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Rw4ZbY1e8c6HwxxBKM0w/original.jpg",
+            "thumb": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Rw4ZbY1e8c6HwxxBKM0w/thumb.jpg",
+            "annotation": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Rw4ZbY1e8c6HwxxBKM0w/annotation-Goal-NotGoal.png"
+          },
+          "preprocessing": {},
+          "augmentation": {}
+        },
+        {
+          "id": "search/search-goal-in-football-type-2",
+          "type": "object-detection",
+          "name": "Search Goal In Football Type 2",
+          "created": 1676567877.151,
+          "updated": 1677165748.622,
+          "images": 500,
+          "unannotated": 0,
+          "annotation": "Goal-NotGoal",
+          "versions": 1,
+          "public": true,
+          "multilabel": false,
+          "license": "CC BY 4.0",
+          "splits": {
+            "export": 0,
+            "valid": 52,
+            "test": 52,
+            "train": 396
+          },
+          "colors": {
+            "Goal-NotGoal": "#C7FC00",
+            "NotGoal": "#FF00FF",
+            "Goal": "#8622FF"
+          },
+          "classes": {
+            "Goal": 117,
+            "NotGoal": 346
+          },
+          "icon": {
+            "original": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/cXbt3MyWn9ksFN8OvEoN/original.jpg",
+            "thumb": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/cXbt3MyWn9ksFN8OvEoN/thumb.jpg",
+            "annotation": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/cXbt3MyWn9ksFN8OvEoN/annotation-Goal-NotGoal.png"
+          },
+          "preprocessing": {},
+          "augmentation": {}
+        },
+        {
+          "id": "search/search-number-in-football",
+          "type": "object-detection",
+          "name": "Search Number In Football",
+          "created": 1675845092.584,
+          "updated": 1676223346.438,
+          "images": 100,
+          "unannotated": 0,
+          "annotation": "Number-Kicker",
+          "versions": 1,
+          "public": true,
+          "multilabel": false,
+          "license": "CC BY 4.0",
+          "splits": {
+            "export": 0,
+            "valid": 10,
+            "test": 10,
+            "train": 80
+          },
+          "colors": {
+            "0": "#C7FC00",
+            "1": "#FFABAB",
+            "2": "#FFFF00",
+            "3": "#00B7EB",
+            "4": "#CCCCCC",
+            "5": "#00FFCE",
+            "6": "#FE0056",
+            "7": "#0000FF",
+            "8": "#0E7AFE",
+            "9": "#FF8000",
+            "Number-Kicker": "#C7FC00",
+            "Kicker": "#FF00FF",
+            "Number": "#8622FF",
+            "-": "#FF00FF",
+            "\u044d": "#8622FF"
+          },
+          "classes": {
+            "0": 61,
+            "1": 186,
+            "2": 197,
+            "3": 116,
+            "4": 71,
+            "5": 108,
+            "6": 52,
+            "7": 83,
+            "8": 45,
+            "9": 93,
+            "Kicker": 1094
+          },
+          "icon": {
+            "original": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/TeAxD4GT1qX7sFHQYn62/original.jpg",
+            "thumb": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/TeAxD4GT1qX7sFHQYn62/thumb.jpg",
+            "annotation": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/TeAxD4GT1qX7sFHQYn62/annotation-Number-Kicker.png"
+          },
+          "preprocessing": {},
+          "augmentation": {}
+        },
+        {
+          "id": "search/search-object-in-football",
+          "type": "object-detection",
+          "name": "Search Object In Football",
+          "created": 1675162113.672,
+          "updated": 1677499188.183,
+          "images": 1100,
+          "unannotated": 0,
+          "annotation": "Ball-Gater-Kicker",
+          "versions": 2,
+          "public": true,
+          "multilabel": false,
+          "license": "CC BY 4.0",
+          "splits": {
+            "export": 0,
+            "valid": 110,
+            "test": 110,
+            "train": 880
+          },
+          "colors": {
+            "Ball-Gater-Kicker": "#C7FC00",
+            "Kicker": "#FF00FF",
+            "Ball": "#8622FF",
+            "Gater": "#FE0056",
+            "Gatter": "#00FFCE",
+            "\\": "#FF8000",
+            "person": "#00B7EB"
+          },
+          "classes": {
+            "Ball": 862,
+            "Gater": 1015,
+            "Kicker": 13141
+          },
+          "icon": {
+            "original": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Fe2inbwdN1Ua2O7Y6kYf/original.jpg",
+            "thumb": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Fe2inbwdN1Ua2O7Y6kYf/thumb.jpg",
+            "annotation": "https://source.roboflow.com/OxX14YAp4ANwdREeRZvwDY8WgKx2/Fe2inbwdN1Ua2O7Y6kYf/annotation-Ball-Gater-Kicker.png"
+          },
+          "preprocessing": {},
+          "augmentation": {}
+        }
+      ]
+    }
+  }
+}

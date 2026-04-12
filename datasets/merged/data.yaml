@@ -1,7 +1,0 @@
-names:
-  0: weed
-  1: crop
-nc: 2
-path: D:\THE DEVILS\FasalAstra_AI\datasets\merged
-train: images/train
-val: images/val
