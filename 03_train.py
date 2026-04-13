@@ -145,7 +145,7 @@ if __name__ == '__main__':
     # With 14K images at 64 batch: 220 steps/epoch = ~44,000 total steps
     # 200 epochs gives the model time to fully converge
     # Early stopping (patience=20) will stop early if val plateaus
-    EPOCHS        = 200
+    EPOCHS        = 50
     LR_INITIAL    = 0.01
     LR_FINAL      = 0.001   # cosine decay target
     WARMUP_EPOCHS = 5
@@ -180,7 +180,7 @@ if __name__ == '__main__':
     # resume from it automatically instead of starting over.
     CHECKPOINT_PATH = 'runs/detect/runs/fasal_astra_rpi4/weights/last.pt'
     RESUME_TRAINING = False
-    MODEL_PATH      = 'yolo26n.pt'
+    MODEL_PATH      = 'runs/detect/runs/fasal_astra_rpi4/weights/best.pt'
 
     if os.path.exists(CHECKPOINT_PATH):
         MODEL_PATH      = CHECKPOINT_PATH
@@ -359,7 +359,9 @@ if __name__ == '__main__':
         #   distinguishes weed vs crop vs soil
         #   Prevents "crop classified as weed" = false spray
         box = 10.0,
-        cls = 0.8,
+        cls = 2.0,       # INCREASED: penalize weed misclassification harder
+        overlap_mask = True,
+        mask_ratio   = 4,
         dfl = 1.5,
 
         # ── MULTI-SCALE TRAINING ──────────────────────────────

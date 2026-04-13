@@ -43,7 +43,12 @@ if __name__ == '__main__':
     print("\n🌾 Per-Class Performance:")
     per_class_results = {}
     for i, name in metrics.names.items():
-        class_map50 = metrics.box.maps[i]
+        # Handle cases where a class (like soil) has 0 images and is omitted from the metrics array
+        if hasattr(metrics.box, "ap_class_index") and i in metrics.box.ap_class_index:
+            idx = metrics.box.ap_class_index.tolist().index(i)
+            class_map50 = metrics.box.ap50[idx] if hasattr(metrics.box, "ap50") else metrics.box.maps[idx]
+        else:
+            class_map50 = 0.0
         per_class_results[name] = class_map50
         print(f"   {name:12s} -> mAP50: {class_map50:.2%}")
 
