@@ -31,7 +31,7 @@ from rpi.gpio_controller import SolenoidController
 from rpi.imu_reader      import IMUReader
 
 # ── CONFIG ────────────────────────────────────────────────
-MODEL_PATH   = 'runs/fasal_astra_v3_rpi/weights/best.pt'
+MODEL_PATH   = 'models/best.onnx'
 SHOW_DISPLAY = True   # set False if no monitor connected
 USE_PI_CAM   = True   # set False to use USB webcam for testing
 # ─────────────────────────────────────────────────────────
