@@ -104,6 +104,15 @@ Trained on **14,175 labeled images** (12,756 train / 1,419 val) from 14 diverse 
 > **Key Safety Metric:**  
 > Crop mAP50 of **85.97%** means the model reliably identifies crops and avoids spraying them — protecting the farmer's yield.
 
+### Models Available on GitHub
+
+| File | Size | Purpose |
+|---|---|---|
+| `models/best.onnx` | 10 MB | ✅ **Deploy this on RPi4** — optimized ONNX model |
+| `models/fasal_astra_v23.pt` | ~5 MB | Full PyTorch weights (backup / fine-tuning) |
+| `yolo11n.pt` | 5.4 MB | ✅ Base YOLO11n backbone (needed if retraining) |
+| `yolo26n.pt` | 5.3 MB | ✅ Base YOLO26n backbone (needed if retraining) |
+
 ---
 
 ## Project Structure
@@ -141,6 +150,9 @@ FasalAstra_AI/
 │       └── weights/
 │           ├── best.pt     ← Full PyTorch weights
 │           └── best.onnx   ← Exported lightweight ONNX
+│
+├── yolo11n.pt              ← ✅ Base YOLO11n backbone (on GitHub, needed to retrain)
+├── yolo26n.pt              ← ✅ Base YOLO26n backbone (on GitHub, needed to retrain)
 │
 ├── 01_download.py          ← Downloads all 14 datasets (Roboflow + Kaggle)
 ├── 02_rebuild_merge.py     ← Merges, validates, deduplicates all datasets
