@@ -263,6 +263,103 @@ You should see a 2-second camera preview. If not, check the ribbon cable orienta
 
 ---
 
+## 🤖 Getting the Pre-Trained Model onto Raspberry Pi
+
+> **This section is for teammates or anyone who just wants to run the system without re-training.**  
+> The model is already trained and exported. You just need to get it onto the Pi — choose ONE method below.
+
+---
+
+### ✅ Method 1 — Git Clone (Easiest, Recommended)
+
+This downloads the **entire project + model** in one command. Do this on the **Raspberry Pi terminal** after SSH-ing in.
+
+```bash
+# Clone the full project
+git clone https://github.com/Kmennn/FasalAstra-AI.git
+
+# Enter the project folder
+cd FasalAstra-AI
+
+# Switch to the branch that has the trained model
+git checkout docs/final-comprehensive-reports
+
+# Confirm the model is there (should show best.onnx ~10MB)
+ls -lh models/
+```
+
+You should see something like:
+```
+-rw-r--r-- 1 pi pi 9.8M Apr 13 19:00 best.onnx
+```
+
+✅ Done! The model is at `~/FasalAstra-AI/models/best.onnx`.  
+Now jump to [Running the System](#running-the-system).
+
+---
+
+### ✅ Method 2 — Direct Download (No Git needed)
+
+If you just want the model file and nothing else, run this **on the Raspberry Pi**:
+
+```bash
+# Create the folder structure
+mkdir -p ~/FasalAstra-AI/models
+
+# Download the model directly from GitHub
+wget -O ~/FasalAstra-AI/models/best.onnx \
+  "https://github.com/Kmennn/FasalAstra-AI/raw/refs/heads/docs/final-comprehensive-reports/models/best.onnx"
+
+# Then also download the Python scripts you need
+git clone https://github.com/Kmennn/FasalAstra-AI.git /tmp/fasalastra
+cp -r /tmp/fasalastra/core ~/FasalAstra-AI/
+cp -r /tmp/fasalastra/rpi ~/FasalAstra-AI/
+```
+
+Verify the download:
+```bash
+ls -lh ~/FasalAstra-AI/models/best.onnx
+# Should show: 9.8M best.onnx
+```
+
+---
+
+### ✅ Method 3 — SCP from Teammate's Windows PC
+
+If your teammate (who has the trained model on their Windows laptop) wants to push it directly to your Pi over WiFi:
+
+**Run this on the teammate's Windows PC** (not the Pi):
+```powershell
+# First confirm both devices are on the same WiFi network
+ping fasalastra.local
+
+# Transfer the model file
+scp "d:\THE DEVILS\FasalAstra_AI\models\best.onnx" pi@fasalastra.local:~/FasalAstra-AI/models/best.onnx
+```
+
+It will ask for the Pi password. Once done, the model is on the Pi. Then on the Pi, verify:
+```bash
+ls -lh ~/FasalAstra-AI/models/best.onnx
+```
+
+---
+
+### After Getting the Model — Install Dependencies
+
+Whichever method you used, you still need to install the Python libraries once:
+
+```bash
+pip3 install ultralytics onnxruntime picamera2 RPi.GPIO smbus2 opencv-python numpy mpu6050-raspberrypi --break-system-packages
+```
+
+Then run the system:
+```bash
+cd ~/FasalAstra-AI
+python3 rpi/main_rpi.py
+```
+
+---
+
 ## Running the System
 
 ### Full Hardware Mode (on RPi4)
