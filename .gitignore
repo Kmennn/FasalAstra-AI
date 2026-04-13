@@ -19,3 +19,5 @@ runs/
 *.pt
 !models/*.pt
 !models/*.tflite
+!yolo11n.pt
+!yolo26n.pt
